@@ -6,6 +6,7 @@ const Manager = require('./lib/Manager');
 const generate = require('./util/generateHtml.js');
 var team = [];
 
+// init function, prompts user for manager info then calls addTeamMember() to build team
 const init = async () => {
     try {
         const ans = await inquirer.prompt([
@@ -37,6 +38,7 @@ const init = async () => {
     }
 }
 
+// will call it self until user finishes building team
 const addTeamMember = async () => {
     try {
         let ans = await inquirer.prompt([
@@ -101,6 +103,7 @@ const addTeamMember = async () => {
                 addTeamMember();
                 break;
             default:
+                // use the team array to generate html and output to file
                 const content = generate(team);
                 fs.writeFile('./dist/index.html', content, (err) => {
                     if (err)
